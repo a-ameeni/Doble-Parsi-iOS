@@ -20,3 +20,7 @@ The Android GeminiLiveClient connects to BidiGenerateContent over WebSocket, sen
 - Implement captions, audio export, language and settings UI, usage accounting and secure key storage.
 - Create the iOS project, automated macOS build and unsigned artifact; document Windows signing and installation.
 - Build on macOS and test with a real Gemini key and physical iPhone before claiming feature parity or installability.
+
+## Initial iOS scaffold
+
+The initial SwiftUI screen imports and plays a user-selected local audio or video file. Live dubbing, captions, export, usage metering and settings are not implemented. The GitHub Actions workflow generates an Xcode project and builds an unsigned IPA; the artifact is not directly installable until signed. The pipeline and playback need validation on GitHub Actions and an iPhone.
