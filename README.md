@@ -1,28 +1,21 @@
-# Doble Parsi for iOS
+# دوبله پارسی برای آیفون
 
-Status: planning only. No iOS application or installable IPA exists yet.
+نسخهٔ آزمایشی مستقل بر اساس [Doble Parsi Mobile](https://github.com/QW-AI-Code/Doble-Parsi-Mobile). ساخت ابری iOS فعال است. دوبلهٔ زنده هنوز روی دستگاه واقعی و با Gemini تأیید نشده و این نسخه آمادهٔ انتشار نیست.
 
-## Agreed direction
+## نصب آزمایشی با ویندوز
 
-Build an iPhone app with an internal media player, Gemini Live dubbing, captions, export, Persian and English UI, and a cloud macOS build. Install for personal use from Windows using a compatible sideloading tool and the user's Apple account. Free provisioning and renewal are subject to Apple's current limitations.
+۱. از بخش Actions آخرین اجرای موفق iOS build را باز کنید و artifact با نام `DobleParsi-unsigned` را دانلود و استخراج کنید. برای دانلود وارد GitHub شوید.
+۲. [Sideloadly](https://sideloadly.io/) را روی ویندوز نصب کنید و طبق راهنمای آن آیفون و Apple Account خود را آماده کنید. اطلاعات ورود اپل را در این مخزن یا گفتگو وارد نکنید.
+۳. فایل IPA استخراج‌شده را در Sideloadly انتخاب کنید، آیفون را متصل کنید و دستورهای ابزار را برای امضا و نصب دنبال کنید. بنا به نسخهٔ iOS ممکن است فعال‌کردن Developer Mode و تأیید گواهی روی گوشی لازم باشد.
+۴. با حساب رایگان امضا معمولاً هفت روز اعتبار دارد و باید تمدید شود. موفقیت نصب و محدودیت‌های ابزار به نسخهٔ iOS و شرایط اپل وابسته است.
 
-## Platform boundaries
+## وضعیت و محدودیت‌ها
 
-The Android application captures other applications' playback using MediaProjection. iOS does not offer a directly equivalent general-purpose API. A floating overlay across arbitrary apps and other apps' media metadata are also unavailable through equivalent public APIs. ReplayKit broadcast capture must be validated separately on real devices and cannot be assumed to capture protected content or all applications.
+- انتخاب فایل محلی و اتصال آزمایشی Gemini Live پیاده شده‌اند؛ به کلید معتبر Gemini و دسترسی به مدل پیش‌نمایش نیاز است. کلید فقط در حافظهٔ برنامه نگه‌داری می‌شود.
+- خروجی صوت و SRT، مدیریت مصرف، تنظیمات کامل، بازیابی اتصال، و همگام‌سازی قابل‌اتکا هنوز تکمیل نشده‌اند.
+- صدای سایر برنامه‌ها و دکمهٔ شناور سراسری معادل مستقیمی با نسخهٔ اندروید ندارند. محتوای DRM نیز ممکن است قابل پردازش نباشد.
+- فایل IPA بدون امضا مستقیماً روی آیفون نصب نمی‌شود؛ موفقیت ساخت، اثبات کارکرد روی دستگاه نیست.
 
-## Existing protocol
+## توسعه
 
-The Android GeminiLiveClient connects to BidiGenerateContent over WebSocket, sends mono PCM16 at 16 kHz, receives mono PCM16 at 24 kHz, requests audio translation and optional transcripts, and processes usage metadata. The implementation must preserve connection, interruption, quota, and session lifecycle behavior.
-
-## Remaining work
-
-- Design and implement the media decoding, real-time pacing, translation, playback and synchronization pipeline.
-- Implement captions, audio export, language and settings UI, usage accounting and secure key storage.
-- Create the iOS project, automated macOS build and unsigned artifact; document Windows signing and installation.
-- Build on macOS and test with a real Gemini key and physical iPhone before claiming feature parity or installability.
-
-## Initial iOS scaffold
-
-The initial SwiftUI screen imports and plays a user-selected local audio or video file. Live dubbing, captions, export, usage metering and settings are not implemented. The GitHub Actions workflow generates an Xcode project and builds an unsigned IPA; the artifact is not directly installable until signed. The pipeline and playback need validation on GitHub Actions and an iPhone.
-
-The experimental dubbing path streams decoded local-file audio to Gemini Live and plays returned audio. It requires a valid Gemini API key and access to the translation preview model. It has not yet been tested on an iPhone or against the live API. Playback controls, timing, output export and complete language coverage remain incomplete. The key is held in memory for the current app session.
+پروژه با XcodeGen از `project.yml` ساخته می‌شود و GitHub Actions روی macOS آن را بدون امضا می‌سازد. برنامه از کد منبع پروژهٔ اندرویدی QW-AI-Code الهام گرفته است.
