@@ -24,3 +24,5 @@ The Android GeminiLiveClient connects to BidiGenerateContent over WebSocket, sen
 ## Initial iOS scaffold
 
 The initial SwiftUI screen imports and plays a user-selected local audio or video file. Live dubbing, captions, export, usage metering and settings are not implemented. The GitHub Actions workflow generates an Xcode project and builds an unsigned IPA; the artifact is not directly installable until signed. The pipeline and playback need validation on GitHub Actions and an iPhone.
+
+The experimental dubbing path streams decoded local-file audio to Gemini Live and plays returned audio. It requires a valid Gemini API key and access to the translation preview model. It has not yet been tested on an iPhone or against the live API. Playback controls, timing, output export and complete language coverage remain incomplete. The key is held in memory for the current app session.
