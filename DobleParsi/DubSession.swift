@@ -47,7 +47,7 @@ final class DubSession: ObservableObject {
                 status = "در حال دوبله"
                 let receiveTask = Task { try await receive(on: webSocket) }
                 do {
-                    player.seek(to: .zero)
+                    await player.seek(to: .zero)
                     player.play()
                     try await stream(url: url, on: webSocket)
                     status = "ارسال فایل تمام شد؛ در انتظار پاسخ…"
@@ -115,7 +115,7 @@ final class DubSession: ObservableObject {
                 guard frames > 0, let format = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: 24000, channels: 1, interleaved: true), let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(frames)), let destination = buffer.int16ChannelData?[0] else { continue }
                 buffer.frameLength = AVAudioFrameCount(frames)
                 data.withUnsafeBytes { bytes in if let base = bytes.baseAddress { memcpy(destination, base, frames * 2) } }
-                speaker.scheduleBuffer(buffer)
+                speaker.scheduleBuffer(buffer, completionHandler: nil)
             }
         }
     }
